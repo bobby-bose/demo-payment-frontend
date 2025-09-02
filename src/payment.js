@@ -4,7 +4,7 @@ function PayButton({ amount, customerPhone }) {
   const handlePayment = async () => {
     try {
       const orderId = 'ORD' + Date.now(); // Unique order ID
-      const response = await axios.post('/api/payment/create', {
+      const response = await axios.post('https://backend-demo-payment-kqut.onrender.com/api/payment/create', {
         amount,
         orderId,
         customerPhone
