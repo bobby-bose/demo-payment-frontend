@@ -5,15 +5,12 @@ function PayButton() {
     try {
       const orderId = 'ORD' + Date.now();
 
-      const response = await axios.post(
-        'https://backend-demo-payment-kqut.onrender.com/api/payment/create',
-        {
-          amount: 100,          // ₹1 in paise
-          orderId,
-          customerPhone: '7012085349'
-        },
-        { headers: { 'Content-Type': 'application/json' } }
-      );
+    const response = await axios.post(
+  'https://backend-demo-payment-kqut.onrender.com/api/payment/create',
+  { orderId: 'ORD' + Date.now(), customerPhone: '7012085349' },
+  { headers: { 'Content-Type': 'application/json' } }
+);
+
 
       if (response.data.paymentUrl) {
         window.location.href = response.data.paymentUrl; // Redirect to PhonePe
