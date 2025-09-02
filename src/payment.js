@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-function PayButton({ amount, customerPhone }) {
+function PayButton() {
   const handlePayment = async () => {
     try {
       const orderId = 'ORD' + Date.now(); // Unique order ID
       const response = await axios.post('https://backend-demo-payment-kqut.onrender.com/api/payment/create', {
-        amount,
+        amount: 100,
         orderId,
-        customerPhone
+        customerPhone: "9999999999"
       });
 
       if(response.data.paymentUrl){
@@ -23,3 +23,4 @@ function PayButton({ amount, customerPhone }) {
 }
 
 export default PayButton;
+      
