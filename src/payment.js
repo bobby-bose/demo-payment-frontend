@@ -8,7 +8,7 @@ export default function PhonePePayment() {
     setLoading(true);
     try {
       // Call backend to create payment link
-      const res = await axios.post("https://modern-chicken-decide.loca.lt/create-payment", {
+      const res = await axios.post("https://backend-demo-payment-kqut.onrender.com/create-payment", {
         amount: 1,                // ₹1 default
         mobileNumber: "9999999999" // optional, can be dynamic
       });
