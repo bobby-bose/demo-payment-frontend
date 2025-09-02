@@ -1,22 +1,33 @@
 import axios from 'axios';
 
-function PayButton({ amount, customerPhone }) {
+function PayButton() {
   const handlePayment = async () => {
     try {
-      const orderId = 'ORD' + Date.now(); // Unique order ID
+      const orderId = 'ORD' + Date.now();
 
       const response = await axios.post(
         'https://backend-demo-payment-kqut.onrender.com/api/payment/create',
-        { amount, orderId, customerPhone },
+        {
+          amount: 100,          // ₹1 in paise
+          orderId,
+          customerPhone: '7012085349'
+        },
         { headers: { 'Content-Type': 'application/json' } }
       );
 
       if (response.data.paymentUrl) {
-        window.location.href = response.data.paymentUrl; // Redirect to PhonePe app
+        window.location.href = response.data.paymentUrl; // Redirect to PhonePe
+      } else {
+        alert('Payment failed: Payment link not returned from server.');
+        console.error('[ERROR] Payment failed: Payment link missing', response.data);
       }
     } catch (err) {
-      console.error('[ERROR] Payment failed:', err);
-      alert('Payment failed!');
+      // Capture HTTP status and error message from backend
+      const status = err.response?.status || 'Network Error';
+      const message = err.response?.data?.error || err.message;
+
+      console.error('[ERROR] Payment failed:', err.response?.data || err.message);
+      alert(`Payment failed!\nStatus: ${status}\nMessage: ${message}`);
     }
   };
 
