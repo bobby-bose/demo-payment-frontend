@@ -7,7 +7,7 @@ function PayButton() {
       const response = await axios.post('https://backend-demo-payment-kqut.onrender.com/api/payment/create', {
         amount: 100,
         orderId,
-        customerPhone: "9999999999"
+        customerPhone: "9945399999"
       });
 
       if(response.data.paymentUrl){
