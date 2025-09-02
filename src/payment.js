@@ -24,7 +24,7 @@ export default function PhonePePayment() {
 
   return (
     <div style={{ textAlign: "center", marginTop: "100px" }}>
-      <h1>Pay ₹1 via PhonePe</h1>
+      <h1>Pay ₹1 viaaaa PhonePe</h1>
       <button onClick={payNow} disabled={loading}>
         {loading ? "Redirecting..." : "Pay Now"}
       </button>
