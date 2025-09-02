@@ -1,33 +1,25 @@
-import { useState } from "react";
-import axios from "axios";
+import axios from 'axios';
 
-export default function PhonePePayment() {
-  const [loading, setLoading] = useState(false);
-
-  const payNow = async () => {
-    setLoading(true);
+function PayButton({ amount, customerPhone }) {
+  const handlePayment = async () => {
     try {
-      // Call backend to create payment link
-      const res = await axios.post("https://backend-demo-payment-kqut.onrender.com/create-payment", {
-        amount: 1,                // ₹1 default
-        mobileNumber: "9999999999" // optional, can be dynamic
+      const orderId = 'ORD' + Date.now(); // Unique order ID
+      const response = await axios.post('/api/payment/create', {
+        amount,
+        orderId,
+        customerPhone
       });
 
-      // Redirect user to PhonePe sandbox / deeplink
-      window.location.href = res.data.payLink;
+      if(response.data.paymentUrl){
+        window.location.href = response.data.paymentUrl; // Redirect to PhonePe app
+      }
     } catch (err) {
-      console.error(err.response?.data || err.message);
-      alert("Error creating payment link");
+      console.error(err);
+      alert('Payment failed!');
     }
-    setLoading(false);
   };
 
-  return (
-    <div style={{ textAlign: "center", marginTop: "100px" }}>
-      <h1>Pay ₹1 viaaaa PhonePe</h1>
-      <button onClick={payNow} disabled={loading}>
-        {loading ? "Redirecting..." : "Pay Now"}
-      </button>
-    </div>
-  );
+  return <button onClick={handlePayment}>Pay with PhonePe</button>;
 }
+
+export default PayButton;
